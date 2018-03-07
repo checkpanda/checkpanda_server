@@ -6,16 +6,14 @@
 use Mix.Config
 
 # General application configuration
-config :checkpanda_server,
-  ecto_repos: [CheckpandaServer.Repo]
+config :checkpanda_server, ecto_repos: [CheckpandaServer.Repo]
 
 # Configures the endpoint
 config :checkpanda_server, CheckpandaServer.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "U3lA3NEFXLk8YB3jz1vsne385LP8VrJwQVr0G47NC3CNlAo+GvrQYrFgbxYOPEMF",
   render_errors: [view: CheckpandaServer.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: CheckpandaServer.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: CheckpandaServer.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -24,4 +22,4 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"
