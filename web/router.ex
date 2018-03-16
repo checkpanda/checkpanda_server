@@ -20,6 +20,12 @@ defmodule CheckpandaServer.Router do
     get("/", PageController, :index)
   end
 
+  scope "/users", UserController do
+    pipe_through(:api)
+
+    get("/", UserController, [])
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", CheckpandaServer do
   #   pipe_through :api
