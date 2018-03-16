@@ -2,11 +2,11 @@ defmodule CheckpandaServer.User do
   use CheckpandaServer.Web, :model
 
   schema "users" do
-    field :screen_name, :string
-    field :name, :string
-    field :line_id, :string
-    field :line_token, :string
-    field :api_token, :string
+    field :screen_name, :string, null: false
+    field :name, :string, null: false
+    field :line_id, :string, null: false
+    field :line_token, :string, null: false
+    field :api_token, :string, null: false
 
     timestamps()
   end
