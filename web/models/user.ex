@@ -21,7 +21,7 @@ defmodule CheckpandaServer.User do
     :checkpanda_server, :line_token_length_min)
 
   schema "users" do
-    field :screen_name, :string, null: false
+    field :screen_name, :string, null: false, unique: true
     field :name, :string, null: false
     field :line_id, :string, null: false
     field :line_token, :string, null: false
@@ -41,6 +41,7 @@ defmodule CheckpandaServer.User do
       :screen_name, min: @screen_name_length_min, max: @screen_name_length_max
     )
     |> validate_format(:screen_name, @screen_name_format)
+    |> unique_constraint(:screen_name)
     |> validate_length(:name, min: @name_length_min, max: @name_length_max)
     |> validate_format(:name, @name_format)
     |> validate_length(:api_token, is: @api_token_length)
