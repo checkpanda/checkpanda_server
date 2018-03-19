@@ -5,12 +5,14 @@ defmodule CheckpandaServer.User do
     :checkpanda_server, :screen_name_length_min)
   @screen_name_length_max Application.get_env(
     :checkpanda_server, :screen_name_length_max)
+  @screen_name_format Application.get_env(
+    :checkpanda_server, :screen_name_format)
   @name_length_min Application.get_env(
     :checkpanda_server, :name_length_min)
   @name_length_max Application.get_env(
     :checkpanda_server, :name_length_max)
-  @screen_name_format Application.get_env(
-    :checkpanda_server, :screen_name_format)
+  @name_format Application.get_env(
+    :checkpanda_server, :name_format)
   @api_token_length Application.get_env(
     :checkpanda_server, :api_token_length)
   @line_id_length_min Application.get_env(
@@ -40,6 +42,7 @@ defmodule CheckpandaServer.User do
     )
     |> validate_format(:screen_name, @screen_name_format)
     |> validate_length(:name, min: @name_length_min, max: @name_length_max)
+    |> validate_format(:name, @name_format)
     |> validate_length(:api_token, is: @api_token_length)
     |> validate_length(:line_id, min: @line_id_length_min)
     |> validate_length(:line_token, min: @line_token_length_min)
