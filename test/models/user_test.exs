@@ -1,7 +1,7 @@
 defmodule CheckpandaServer.UserTest do
   use CheckpandaServer.ModelCase
 
-  alias CheckpandaServer.User
+  alias CheckpandaServer.{Repo, User, Group}
 
   @valid_attrs %{
     api_token: "7C2C6218-FB50-4D23-9C6D-37434A4F8921",
@@ -83,5 +83,10 @@ defmodule CheckpandaServer.UserTest do
   test "changeset with api_token that is not UUID" do
     changeset = make_changeset(api_token: "1234abcd5678efgh")
     refute changeset.valid?
+  end
+
+  test "create new user" do
+    assert {:ok, user = %User{}, group = %Group{}} = User.create_user(@valid_attrs)
+    assert user.id == group.owner_id
   end
 end
