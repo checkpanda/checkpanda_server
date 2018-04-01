@@ -86,7 +86,7 @@ defmodule CheckpandaServer.UserTest do
   end
 
   test "create new user" do
-    assert {:ok, user = %User{}, group = %Group{}} = User.create_user(@valid_attrs)
-    assert user.id == group.owner_id
+    assert {:ok, user} = User.create_user(@valid_attrs)
+    assert user.id == user.personal_group.owner_id
   end
 end

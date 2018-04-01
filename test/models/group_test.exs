@@ -3,8 +3,8 @@ defmodule CheckpandaServer.GroupTest do
 
   alias CheckpandaServer.Group
 
-  @valid_attrs %{is_personal: true, name: "some content"}
-  @invalid_attrs %{}
+  @valid_attrs %{is_personal: true, name: "some content", owner: nil}
+  @invalid_attrs %{owner: nil}
 
   test "changeset with valid attributes" do
     changeset = Group.changeset(%Group{}, @valid_attrs)

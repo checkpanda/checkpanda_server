@@ -18,6 +18,7 @@ defmodule CheckpandaServer.User do
     field(:line_id, :string, null: false)
     field(:line_token, :string, null: false)
     field(:api_token, :string, null: false)
+    has_one(:personal_group, Group, foreign_key: :owner_id)
 
     timestamps()
   end
@@ -53,8 +54,9 @@ defmodule CheckpandaServer.User do
            fn ->
              with user_set <- changeset(%User{}, params),
                   {:ok, user} <- Repo.insert(user_set),
-                  {:ok, group} <- Group.create_private(user)
-               do {:ok, user, group}
+                  {:ok, group} <- Group.create_private(user),
+                  result = Repo.one(from(u in User, preload: [:personal_group]))
+               do {:ok, result}
                else
                  {:error, %{errors: [{:screen_name, {"has already been taken", _}} | _]}} ->
                    {:error, :screen_name_already_taken}
