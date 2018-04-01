@@ -50,26 +50,28 @@ defmodule CheckpandaServer.User do
   ものであるという前提である。
   """
   def create_user(params) do
-    with {:ok, result} <- Repo.transaction(
-           fn ->
-             with user_set <- changeset(%User{}, params),
-                  {:ok, user} <- Repo.insert(user_set),
-                  {:ok, group} <- Group.create_personal(user),
-                  result = Repo.one(from(u in User, preload: [:personal_group]))
-               do {:ok, result}
-               else
-                 {:error, %{errors: [{:screen_name, {"has already been taken", _}} | _]}} ->
-                   {:error, :screen_name_already_taken}
-                 {:error, %{errors: [{key, {"is invalid", _}} | _]}} ->
-                   {:error, {:invalid_parameter, key}}
-                 {:error, %{errors: reason}} ->
-                   {:error, {:unknown_error, reason}}
-                 {:error, reason} -> {:error, reason}
-                  end
-           end)
+    with {:ok, result} <- Repo.transaction(fn -> _create_user(params) end)
       do result
-      else {:error, reason} ->
-          {:error, reason}
+      else
+        {:error, reason} ->
+          reason
+    end
+  end
+
+  defp _create_user(params) do
+    with user_set <- changeset(%User{}, params),
+         {:ok, user} <- Repo.insert(user_set),
+         {:ok, group} <- Group.create_personal(user),
+           result = Repo.one(from(u in User, preload: [:personal_group]))
+      do {:ok, result}
+      else
+        {:error, %{errors: [{:screen_name, {"has already been taken", _}} | _]}} ->
+          {:error, :screen_name_already_taken}
+        {:error, %{errors: [{key, {"is invalid", _}} | _]}} ->
+          {:error, {:invalid_parameter, key}}
+        {:error, %{errors: reason}} ->
+          {:error, {:unknown_error, reason}}
+        {:error, reason} -> {:error, reason}
     end
   end
 end
