@@ -20,7 +20,7 @@ defmodule CheckpandaServer.Group do
     |> validate_required([:name, :is_personal])
   end
 
-  def create_private(user) do
+  def create_personal(user) do
     group_set = changeset(%Group{}, %{is_personal: true, owner: user, name: user.name})
     with {:ok, group} <- Repo.insert(group_set)
       do {:ok, group}

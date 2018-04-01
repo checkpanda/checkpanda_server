@@ -54,7 +54,7 @@ defmodule CheckpandaServer.User do
            fn ->
              with user_set <- changeset(%User{}, params),
                   {:ok, user} <- Repo.insert(user_set),
-                  {:ok, group} <- Group.create_private(user),
+                  {:ok, group} <- Group.create_personal(user),
                   result = Repo.one(from(u in User, preload: [:personal_group]))
                do {:ok, result}
                else

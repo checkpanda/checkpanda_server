@@ -1,7 +1,7 @@
 defmodule CheckpandaServer.UserTest do
   use CheckpandaServer.ModelCase
 
-  alias CheckpandaServer.{Repo, User, Group}
+  alias CheckpandaServer.{User}
 
   @valid_attrs %{
     api_token: "7C2C6218-FB50-4D23-9C6D-37434A4F8921",
